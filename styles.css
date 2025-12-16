@@ -1,0 +1,488 @@
+/* styles.css - Modern Professional News Design (CNN/BBC Hybrid 2025) */
+
+/* ============ CSS VARIABLES ============ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;700;800&family=Oswald:wght@500;600&display=swap');
+
+:root {
+    /* Brand Colors - CNN/BBC Style */
+    --brand-red: #cc0000;
+    /* The classic News Red */
+    --brand-dark: #000000;
+    /* Pure Black */
+    --brand-gray: #f2f2f2;
+    /* Light gray backgrounds */
+
+    /* Text */
+    --text-primary: #111111;
+    --text-secondary: #4b5563;
+    --text-on-dark: #ffffff;
+
+    /* Structural */
+    --bg-body: #ffffff;
+    --border-light: #e5e7eb;
+    --border-strong: #d1d5db;
+
+    /* Spacing */
+    --container-width: 1180px;
+    /* Standard wide viewport */
+    --header-height: 70px;
+
+    /* Modern News Shadow (Subtle) */
+    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* ============ RESET & BASE ============ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    background: var(--bg-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'Playfair Display', serif;
+    /* Prestige Font */
+    color: var(--brand-dark);
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+a:hover {
+    color: var(--brand-red);
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ============ HEADER (CNN Modern Level) ============ */
+.site-header {
+    background: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    /* Very subtle separator */
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    border-top: 4px solid var(--brand-red);
+    /* Signature Red Top Strip */
+}
+
+/* Main Navbar Area (Logo + Links in one cleaner line if on desktop) */
+.main-navbar {
+    background: white;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    /* Taller, breathable header */
+}
+
+/* Logo Area */
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+}
+
+.brand-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.brand-tagline {
+    display: none;
+}
+
+/* Hide tagline for cleaner header */
+
+/* Navigation Links (CNN Style: Bold Black Uppercase) */
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    height: 100%;
+    align-items: center;
+}
+
+.nav-item {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1rem;
+    color: var(--brand-dark);
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -28px;
+    /* Align with container bottom border */
+    left: 0;
+    width: 0;
+    height: 4px;
+    background: var(--brand-red);
+    transition: width 0.2s;
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+    width: 100%;
+}
+
+.nav-separator {
+    width: 1px;
+    height: 24px;
+    background: var(--border-light);
+}
+
+/* User Actions */
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    font-weight: 600;
+    border-radius: 4px;
+    /* Slight radius */
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-primary {
+    background: var(--brand-red);
+    color: white;
+    border: none;
+}
+
+/* Search Container */
+.nav-search-container {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.search-form-inline {
+    background: #f9f9f9;
+    transition: all 0.3s;
+}
+
+.search-form-inline:hover,
+.search-form-inline:focus-within {
+    background: #ffffff;
+    border-color: var(--brand-dark) !important;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover {
+    background: #a00000;
+    color: white;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--brand-dark);
+}
+
+.btn-outline:hover {
+    border-color: var(--brand-dark);
+}
+
+/* ============ LAYOUT & NEWS ARTICLES ============ */
+.main-content-area {
+    margin-top: 3rem;
+}
+
+.section-block {
+    margin-bottom: 4rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    border-left: 5px solid var(--brand-red);
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+}
+
+/* HERO SECTION (No Borders, Big Images) */
+.news-hero-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    /* 2/3 Main, 1/3 Side */
+    gap: 2rem;
+}
+
+/* Main Hero Card */
+.news-hero-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    /* No border radius for pro look */
+}
+
+.hero-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.news-hero-card:hover .hero-image img {
+    transform: scale(1.03);
+    /* Subtle zoom */
+}
+
+.hero-overlay {
+    background: white;
+    /* Text BELOW image for cleaner look? Or OVERLAY? CNN does Overlay for big features usually, but below is cleaner */
+    /* Let's go with Text Below for 2024 styling - easier reading */
+    padding-top: 1rem;
+}
+
+/* WAIT - The HTML structure assumes overlay. Let's adjust CSS to handle it as 'Text Below' if desired or Overlay.
+Let's stick to the Overlay for the MAIN hero to save space, but make it legible */
+.hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    padding: 2rem;
+    color: white;
+    pointer-events: none;
+}
+
+.hero-category {
+    background: var(--brand-red);
+    color: white;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-meta {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    color: #ddd;
+}
+
+/* Side Stories (Vertical Stack) */
+.news-hero-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-left: 1px solid var(--border-light);
+    padding-left: 1.5rem;
+}
+
+.small-hero-card {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.small-hero-image {
+    width: 120px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+.small-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.small-hero-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    font-family: 'Inter', sans-serif;
+    /* Side stories often sans-serif */
+}
+
+.small-hero-meta {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* LATEST NEWS: The "Clean List" */
+.news-list-view {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* 2 Columns of Lists */
+    gap: 3rem;
+}
+
+.news-card-horizontal {
+    display: flex;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 1.5rem;
+}
+
+.news-card-horizontal:last-child {
+    border: none;
+}
+
+.news-horizontal-image {
+    width: 180px;
+    height: 120px;
+    flex-shrink: 0;
+}
+
+.news-horizontal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.news-horizontal-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.news-excerpt {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.news-meta-item {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 0.5rem;
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+/* ============ AUTH PAGES (Centered Box) ============ */
+.auth-wrapper {
+    background: white;
+    padding: 3rem;
+    max-width: 480px;
+    margin: 4rem auto;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    /* Mild radius */
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-control:focus {
+    border-color: var(--brand-dark);
+    outline: none;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ============ MOBILE ============ */
+.mobile-menu-toggle {
+    display: none;
+}
+
+@media (max-width: 900px) {
+
+    .nav-links,
+    .nav-search,
+    .header-actions {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+    }
+
+    .news-hero-section {
+        grid-template-columns: 1fr;
+    }
+
+    .news-hero-side {
+        border-left: none;
+        padding-left: 0;
+        margin-top: 2rem;
+    }
+
+    .news-list-view {
+        grid-template-columns: 1fr;
+    }
+}
