@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Login Logic
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Please enter a valid email address';
-    } elseif (!str_ends_with($email, '@iub.edu.bd')) {
+    } elseif (substr($email, -11) !== '@iub.edu.bd') {
         $error = 'Please use your IUB email address (@iub.edu.bd)';
     } else {
         $sql = "SELECT * FROM users WHERE email = ?";

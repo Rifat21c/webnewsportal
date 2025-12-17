@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $role = $_POST['role'] ?? 'student';
 
     // Basic Validation
-    if (!str_ends_with(strtolower($email), '@iub.edu.bd')) {
+    if (substr(strtolower($email), -11) !== '@iub.edu.bd') {
         $error = 'Please use a valid IUB email address (@iub.edu.bd)';
     } elseif (strlen($password) < 6) {
         $error = "Password must be at least 6 characters";
