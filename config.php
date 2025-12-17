@@ -18,7 +18,7 @@ if ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != '127.0.0.1'
     $db_host = 'sql100.infinityfree.com';
     $db_user = 'if0_40705823';
     $db_pass = 'n6K9HNj5Hp';
-    $db_name = 'if0_40705823_XXX'; // NOTE: Verify this database name matches exactly what you created
+    $db_name = 'if0_40705823_newsportal'; // Corrected database name
 }
 
 // Error reporting (development only - disable in production)
