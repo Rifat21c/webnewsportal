@@ -1,3 +1,4 @@
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS bookmarks;
 
 CREATE TABLE `bookmarks` (
@@ -74,8 +75,46 @@ INSERT INTO posts VALUES("2","Registration Open for Spring 2026 Semester","Dear 
 INSERT INTO posts VALUES("3","IUB Debate Club Wins National Championship","The IUB Debate Club has secured first place at the National Debate Championship held in Dhaka. The team competed against 25 universities from across the country and demonstrated exceptional critical thinking and public speaking skills.\n\nCongratulations to all team members and their coach for this remarkable achievement!","Student Life","1","https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800","","approved","423","2025-12-03 21:27:35","2025-12-03 21:27:35");
 INSERT INTO posts VALUES("4","Career Fair 2025 - Connect with Top Employers","IUB Career Services is organizing the annual Career Fair on November 20, 2025. Over 50 leading companies from various industries will be participating to recruit talented graduates and interns.\n\nThis is an excellent opportunity for students to network with potential employers and explore career opportunities. Bring your updated CVs and dress professionally.","Events","1","https://images.unsplash.com/photo-1511578314322-379afb476865?w=800","","approved","792","2025-12-03 21:27:35","2025-12-07 22:11:48");
 INSERT INTO posts VALUES("6","IUB Library Introduces 24/7 Digital Access","The IUB Central Library is excited to announce 24/7 digital access to all electronic resources. Students can now access thousands of journals, e-books, and research databases anytime, anywhere. This initiative aims to support remote learning and research activities.","Academics","1","https://images.unsplash.com/photo-1589998059171-988d887df646?w=800","","approved","299","2025-12-03 21:27:35","2025-12-05 18:48:49");
-INSERT INTO posts VALUES("13","IUB Students Launch Mental Health Awareness Campaign","A group of passionate students from IUB\'s Psychology Department has launched \"Mind Matters,\" a comprehensive mental health awareness campaign aimed at breaking the stigma surrounding mental health issues on campus.\n\nThe campaign, which kicked off on November 25, 2025, features a series of workshops, peer support groups, and interactive sessions designed to promote mental wellness among students and faculty members.\n\nKey initiatives include:\nWeekly mindfulness and meditation sessions every Wednesday at 4 PM\nAnonymous peer counseling service via a dedicated hotline\nMental health resource library in the Student Center\nGuest talks by clinical psychologists and wellness experts\nArt therapy workshops for stress management\n\n\"University life can be overwhelming, and many students struggle in silence,\" said Tasneem Rahman, campaign organizer and 4th-year Psychology major. \"We want to create a safe space where everyone feels comfortable discussing their mental health challenges.\"\n\nThe campaign has already received overwhelming support from the university administration, which has pledged additional funding for counseling services and mental health resources.\n\nStudents interested in volunteering or seeking support can visit the Mind Matters booth at the Student Center or email mindmatters@iub.edu.bd\n\nRemember: It\'s okay to not be okay. Reach out, talk, and take care of your mental health.","Student Life","9","https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800","","approved","5","2025-12-04 22:37:42","2025-12-04 23:20:51");
-INSERT INTO posts VALUES("14","IUB Wins National Hackathon 2025: Team Develops AI-Powered Traffic Solution","A team of five computer science students from Independent University, Bangladesh (IUB) has won the prestigious National Hackathon 2025, competing against 87 teams from universities across the country.\n\nThe winning team, \"Code Crusaders,\" developed \"TrafficAI\" - an innovative artificial intelligence system that optimizes Dhaka\'s traffic flow using real-time data analysis and predictive algorithms.\n\nTeam Members:\nFahim Ahmed (Team Lead, CSE 4th Year)\nNusrat Jahan (CSE 3rd Year)\nRashed Kabir (CSE 4th Year)\nSadia Islam (CSE 3rd Year)\nTanvir Hossain (CSE 2nd Year)\n\nThe TrafficAI system uses machine learning to analyze traffic patterns, predict congestion hotspots, and suggest alternative routes to drivers through a mobile application. The prototype demonstrated a potential 35% reduction in average commute time during peak hours.\n\n\"We were inspired by the daily struggles of Dhaka commuters,\" said Fahim Ahmed. \"Our goal was to create a practical solution that could actually make a difference in people\'s lives.\"\n\nThe team received a prize of BDT 500,000, along with mentorship opportunities from leading tech companies and potential funding for further development of their solution.\n\nDr. Mohammad Rahman, Head of the CSE Department, expressed immense pride: \"This achievement showcases the exceptional talent and innovative thinking of our students. IUB continues to produce graduates who are ready to solve real-world problems.\"\n\nThe Dhaka Metropolitan Police has shown interest in piloting the TrafficAI system in selected areas of the city.\n\nCongratulations to Team Code Crusaders for making IUB proud! 🏆","Academics","9","","","approved","4","2025-12-04 23:43:04","2025-12-05 23:02:56");
+INSERT INTO posts VALUES("13","IUB Students Launch Mental Health Awareness Campaign","A group of passionate students from IUB\'s Psychology Department has launched \"Mind Matters,\" a comprehensive mental health awareness campaign aimed at breaking the stigma surrounding mental health issues on campus.
+\n
+\nThe campaign, which kicked off on November 25, 2025, features a series of workshops, peer support groups, and interactive sessions designed to promote mental wellness among students and faculty members.
+\n
+\nKey initiatives include:
+\nWeekly mindfulness and meditation sessions every Wednesday at 4 PM
+\nAnonymous peer counseling service via a dedicated hotline
+\nMental health resource library in the Student Center
+\nGuest talks by clinical psychologists and wellness experts
+\nArt therapy workshops for stress management
+\n
+\n\"University life can be overwhelming, and many students struggle in silence,\" said Tasneem Rahman, campaign organizer and 4th-year Psychology major. \"We want to create a safe space where everyone feels comfortable discussing their mental health challenges.\"
+\n
+\nThe campaign has already received overwhelming support from the university administration, which has pledged additional funding for counseling services and mental health resources.
+\n
+\nStudents interested in volunteering or seeking support can visit the Mind Matters booth at the Student Center or email mindmatters@iub.edu.bd
+\n
+\nRemember: It\'s okay to not be okay. Reach out, talk, and take care of your mental health.","Student Life","9","https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800","","approved","5","2025-12-04 22:37:42","2025-12-04 23:20:51");
+INSERT INTO posts VALUES("14","IUB Wins National Hackathon 2025: Team Develops AI-Powered Traffic Solution","A team of five computer science students from Independent University, Bangladesh (IUB) has won the prestigious National Hackathon 2025, competing against 87 teams from universities across the country.
+\n
+\nThe winning team, \"Code Crusaders,\" developed \"TrafficAI\" - an innovative artificial intelligence system that optimizes Dhaka\'s traffic flow using real-time data analysis and predictive algorithms.
+\n
+\nTeam Members:
+\nFahim Ahmed (Team Lead, CSE 4th Year)
+\nNusrat Jahan (CSE 3rd Year)
+\nRashed Kabir (CSE 4th Year)
+\nSadia Islam (CSE 3rd Year)
+\nTanvir Hossain (CSE 2nd Year)
+\n
+\nThe TrafficAI system uses machine learning to analyze traffic patterns, predict congestion hotspots, and suggest alternative routes to drivers through a mobile application. The prototype demonstrated a potential 35% reduction in average commute time during peak hours.
+\n
+\n\"We were inspired by the daily struggles of Dhaka commuters,\" said Fahim Ahmed. \"Our goal was to create a practical solution that could actually make a difference in people\'s lives.\"
+\n
+\nThe team received a prize of BDT 500,000, along with mentorship opportunities from leading tech companies and potential funding for further development of their solution.
+\n
+\nDr. Mohammad Rahman, Head of the CSE Department, expressed immense pride: \"This achievement showcases the exceptional talent and innovative thinking of our students. IUB continues to produce graduates who are ready to solve real-world problems.\"
+\n
+\nThe Dhaka Metropolitan Police has shown interest in piloting the TrafficAI system in selected areas of the city.
+\n
+\nCongratulations to Team Code Crusaders for making IUB proud! 🏆","Academics","9","","","approved","4","2025-12-04 23:43:04","2025-12-05 23:02:56");
 INSERT INTO posts VALUES("15","Book Fair","hbjdbhlkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkka","Events","4","uploads/693708ef9adff_grantt.png","","approved","0","2025-12-08 23:20:47","2025-12-09 00:01:58");
 INSERT INTO posts VALUES("16","Sports lifr","jkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkawasmdnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn","Sports","4","uploads/693711eb24726_grantt.png","","rejected","0","2025-12-08 23:59:07","2025-12-09 00:03:05");
 INSERT INTO posts VALUES("18","Cricket Tournament","jksdbvhklkhsjdvbnjkeklhhsbv qi;ak kdjs.vn hkl,df    namv dkjkfb khld k;djb ;kad. d. nad dhfnk       jnnccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccx n dk  dkfj","Sports","4","","uploads/693c751387473_vid_4446327-hd_1920_1080_30fps.mp4","approved","0","2025-12-13 02:03:31","2025-12-13 02:03:48");
@@ -106,3 +145,5 @@ INSERT INTO users VALUES("10","Khan","2222027@iub.edu.bd","$2y$10$QKsiXS6qGOsRFa
 
 
 
+
+SET FOREIGN_KEY_CHECKS = 1;
