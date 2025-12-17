@@ -14,7 +14,9 @@ $db_pass = '';
 $db_name = 'iub_news_portal';
 
 // Override for production (InfinityFree)
-if ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != '127.0.0.1') {
+// We check if the host contains 'localhost' or '127.0.0.1' to keep it local.
+// If NOT local, we assume production.
+if (strpos($_SERVER['HTTP_HOST'], 'localhost') === false && strpos($_SERVER['HTTP_HOST'], '127.0.0.1') === false) {
     $db_host = 'sql100.infinityfree.com';
     $db_user = 'if0_40705823';
     $db_pass = 'n6K9HNj5Hp';
