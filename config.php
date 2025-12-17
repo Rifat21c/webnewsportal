@@ -7,10 +7,19 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Database configuration
+// Database configuration
 $db_host = 'localhost';
 $db_user = 'root';
 $db_pass = '';
 $db_name = 'iub_news_portal';
+
+// Override for production (InfinityFree)
+if ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != '127.0.0.1') {
+    $db_host = 'sql100.infinityfree.com';
+    $db_user = 'if0_40705823';
+    $db_pass = 'n6K9HNj5Hp';
+    $db_name = 'if0_40705823_XXX'; // NOTE: Verify this database name matches exactly what you created
+}
 
 // Error reporting (development only - disable in production)
 error_reporting(E_ALL);
