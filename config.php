@@ -1,12 +1,12 @@
 <?php
 // config.php - IUB News Portal Configuration
+ob_start();
 
-// Start session only if not already started
+// Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Database configuration
 // Database configuration
 $db_host = 'localhost';
 $db_user = 'root';

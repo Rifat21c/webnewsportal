@@ -33,14 +33,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['user_role'] = $user['role'];
                 $_SESSION['logged_in'] = true;
-                header('Location: index.php'); // Redirect to Home
+                header('Location: index.php');
                 exit();
             } else {
-                $error = 'Incorrect password.';
+                $error = 'Incorrect password. Please try again.';
             }
         } else {
-            $error = 'Account not found.';
+            $error = 'Account not found. Verify your email is correct.';
         }
+    }
+    // If we reach here after a POST but without a redirect or error, set a fallback
+    if (empty($error)) {
+        $error = "Unable to process login. Please try again or create a new account.";
     }
 }
 ?>
