@@ -115,6 +115,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create_post'])) {
         }
     }
     
+    // URL Fallbacks
+    if (empty($imageUrl) && !empty($_POST['image_url'])) {
+        $imageUrl = trim($_POST['image_url']);
+    }
+    if (empty($videoUrl) && !empty($_POST['video_url'])) {
+        $videoUrl = trim($_POST['video_url']);
+    }
+    
     if (empty($errors)) {
         // FIXED: Pass correct parameters including author_id and video_url
         $postId = createPost($title, $content, $category, $user['id'], $imageUrl, $videoUrl);
@@ -528,15 +536,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create_post'])) {
                 </div>
                 
                 <div class="form-group">
-                    <label for="image">Featured Image (Optional)</label>
-                    <input type="file" id="image" name="image" accept="image/*">
-                    <small style="color: #666; font-size: 13px;">Max 2MB. JPG, PNG, GIF</small>
+                    <label for="image">Featured Image</label>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <input type="file" id="image" name="image" accept="image/*">
+                        <div style="text-align: center; color: #999; font-size: 0.8rem;">— OR PASTE URL —</div>
+                        <input type="text" name="image_url" placeholder="https://example.com/image.jpg" class="form-control">
+                    </div>
+                    <small style="color: #666; font-size: 11px;">Max 2MB if uploading.</small>
                 </div>
 
                 <div class="form-group">
-                    <label for="video">Featured Video (Optional)</label>
-                    <input type="file" id="video" name="video" accept="video/mp4,video/webm,video/ogg">
-                    <small style="color: #666; font-size: 13px;">Max 500MB. MP4, WebM, OGG</small>
+                    <label for="video">Featured Video</label>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <input type="file" id="video" name="video" accept="video/mp4,video/webm,video/ogg">
+                        <div style="text-align: center; color: #999; font-size: 0.8rem;">— OR PASTE URL —</div>
+                        <input type="text" name="video_url" placeholder="https://example.com/video.mp4" class="form-control">
+                    </div>
+                    <small style="color: #666; font-size: 11px;">Max 50MB if uploading.</small>
                 </div>
                 
                 <div class="form-group">
