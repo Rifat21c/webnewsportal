@@ -1,11 +1,9 @@
 <?php
-// post-detail.php
+// post-detail.php - Professional CNN/BBC Style
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once 'database.php';
-// header.php is included later via getHeader()
-
 
 // Check if post ID is provided
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -30,253 +28,167 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_comment'])) {
         $_SESSION['message'] = 'You must be logged in to comment.';
         $_SESSION['message_type'] = 'error';
     } else {
-        $comment = trim($_POST['comment'] ?? '');
+        $commentText = trim($_POST['comment'] ?? '');
         
-        if (empty($comment)) {
+        if (empty($commentText)) {
             $_SESSION['message'] = 'Comment cannot be empty.';
-            $_SESSION['message_type'] = 'error';
-        } elseif (strlen($comment) > 1000) {
-            $_SESSION['message'] = 'Comment is too long (max 1000 characters).';
             $_SESSION['message_type'] = 'error';
         } else {
             $userId = $_SESSION['user_id'];
-            if (addComment($postId, $userId, $comment)) {
+            if (addComment($postId, $userId, $commentText)) {
                 $_SESSION['message'] = 'Comment added successfully!';
                 $_SESSION['message_type'] = 'success';
-                // Refresh the page to show new comment
-                header("Location: post-detail.php?id=$postId");
+                header("Location: post-detail.php?id=$postId#comments");
                 exit();
             }
         }
     }
 }
 
-// Handle comment deletion (admin only)
-if (isset($_GET['delete_comment']) && isAdmin()) {
-    $commentId = intval($_GET['delete_comment']);
-    if (deleteComment($commentId)) {
-        $_SESSION['message'] = 'Comment deleted successfully.';
-        $_SESSION['message_type'] = 'success';
-        header("Location: post-detail.php?id=$postId");
-        exit();
-    }
-}
-
-// Get comments for this post
+// Get Data for Sidebar
+$trendingPosts = getTrendingPosts(5);
+$academicsPosts = getPostsByCategory('Academics', 3);
 $comments = getComments($postId);
-
-// Get related posts
-$relatedPosts = getRelatedPosts($postId, $post['category'], 3);
 
 $pageTitle = htmlspecialchars($post['title']);
 getHeader($pageTitle);
 ?>
 
-<!-- Post Detail -->
-<main class="post-detail-main">
-    <div class="container">
-        <!-- Post Content -->
-        <article class="post-content">
-            <!-- Post Header -->
-                <div class="post-header">
-                <div class="post-meta">
-                    <span class="category-tag"><?php echo htmlspecialchars($post['category']); ?></span>
-                    <span class="post-status status-<?php echo $post['status']; ?>">
-                        <?php echo ucfirst($post['status']); ?>
-                    </span>
-                </div>
+<main class="container">
+    <div class="article-container">
+        <!-- Main Article Column -->
+        <article class="article-main">
+            <header class="article-header">
+                <span class="article-category"><?php echo htmlspecialchars($post['category']); ?></span>
+                <h1 class="article-title"><?php echo htmlspecialchars($post['title']); ?></h1>
                 
-                <h1 class="post-title"><?php echo htmlspecialchars($post['title']); ?></h1>
-                
-                <div class="post-author-info">
-                    <div class="author-details">
-                        <span class="author-name">By <?php echo htmlspecialchars($post['author_name']); ?></span>
-                        <span class="author-role">(<?php echo ucfirst($post['author_role']); ?>)</span>
+                <div class="article-meta">
+                    <div class="author-block">
+                        <div style="width: 40px; height: 40px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                            <?php echo substr($post['author_name'], 0, 1); ?>
+                        </div>
+                        <div>
+                            <div class="author-name-text">By <?php echo htmlspecialchars($post['author_name']); ?></div>
+                            <div style="font-size: 0.8rem; opacity: 0.8;"><?php echo ucfirst($post['author_role']); ?></div>
+                        </div>
                     </div>
-                    <div class="post-stats">
-                        <span class="post-date">
-                            <i class="far fa-calendar"></i> 
-                            <?php echo formatDate($post['created_at']); ?>
-                        </span>
-                        <span class="post-views">
-                            <i class="far fa-eye"></i> 
-                            <?php echo $post['views']; ?> views
-                        </span>
-                        <?php if (isLoggedIn()): 
-                            $isBookmarked = isBookmarked($_SESSION['user_id'], $post['id']);
-                        ?>
-                            <button id="bookmark-btn" class="btn btn-sm <?php echo $isBookmarked ? 'btn-primary' : 'btn-outline'; ?>" 
-                                    data-id="<?php echo $post['id']; ?>"
-                                    onclick="toggleBookmark(<?php echo $post['id']; ?>)">
-                                <i class="<?php echo $isBookmarked ? 'fas' : 'far'; ?> fa-bookmark"></i>
-                                <?php echo $isBookmarked ? 'Bookmarked' : 'Bookmark'; ?>
-                            </button>
-                        <?php endif; ?>
+                    <div style="text-align: right;">
+                        <div>Published <?php echo formatDate($post['created_at']); ?></div>
+                        <div style="font-size: 0.85rem;"><i class="far fa-eye"></i> <?php echo $post['views']; ?> views</div>
                     </div>
                 </div>
-            </div>
+            </header>
 
-            <!-- Post Image -->
-            <?php if (!empty($post['image_url'])): ?>
-                <div class="post-image-container">
-                    <img src="<?php echo htmlspecialchars($post['image_url']); ?>" 
-                         alt="<?php echo htmlspecialchars($post['title']); ?>" 
-                         class="post-image">
-                </div>
-            <?php endif; ?>
-
-            <!-- Post Video -->
-            <?php if (!empty($post['video_url'])): ?>
-                <div class="post-video-container" style="margin-bottom: 25px; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                    <video controls style="width: 100%; display: block;">
+            <!-- Media Section -->
+            <div class="article-media">
+                <?php if (!empty($post['video_url'])): ?>
+                    <video controls style="width: 100%; border-radius: 4px;">
                         <source src="<?php echo htmlspecialchars($post['video_url']); ?>" type="video/mp4">
-                        <source src="<?php echo htmlspecialchars($post['video_url']); ?>" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
+                <?php elseif (!empty($post['image_url'])): ?>
+                    <img src="<?php echo htmlspecialchars($post['image_url']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>">
+                <?php endif; ?>
+            </div>
+
+            <!-- Content Section -->
+            <div class="article-body">
+                <?php echo $post['content']; // HTML allowed from Quill editor ?>
+            </div>
+
+            <!-- Bookmark Action -->
+            <?php if (isLoggedIn()): 
+                $isBookmarked = isBookmarked($_SESSION['user_id'], $post['id']);
+            ?>
+                <div style="margin-top: 3rem; padding: 2rem; background: var(--brand-gray); border-radius: 8px; text-align: center;">
+                    <button class="btn <?php echo $isBookmarked ? 'btn-primary' : 'btn-outline'; ?>" onclick="toggleBookmark(<?php echo $post['id']; ?>)">
+                        <i class="<?php echo $isBookmarked ? 'fas' : 'far'; ?> fa-bookmark"></i>
+                        <?php echo $isBookmarked ? 'Saved to Bookmarks' : 'Save for Later'; ?>
+                    </button>
+                    <script>
+                    function toggleBookmark(postId) {
+                        fetch('toggle-bookmark.php?id=' + postId)
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data.success) {
+                                location.reload();
+                            }
+                        });
+                    }
+                    </script>
                 </div>
             <?php endif; ?>
 
-            <!-- Post Body -->
-            <div class="post-body">
-                <?php 
-                // Display content allowing HTML (from Rich Text Editor)
-                // Note: In a production environment, you should use HTMLPurifier here to prevent XSS
-                echo $post['content']; 
-                ?>
-            </div>
-
-            <!-- Post Actions -->
-            <div class="post-actions">
-                <?php if (isAdmin()): ?>
-                    <div class="admin-actions">
-                        <?php if ($post['status'] == 'pending'): ?>
-                            <a href="approve-post.php?id=<?php echo $post['id']; ?>" class="btn-success">
-                                <i class="fas fa-check"></i> Approve Post
-                            </a>
-                            <a href="reject-post.php?id=<?php echo $post['id']; ?>" class="btn-danger">
-                                <i class="fas fa-times"></i> Reject Post
-                            </a>
-                        <?php elseif ($post['status'] == 'rejected'): ?>
-                            <a href="approve-post.php?id=<?php echo $post['id']; ?>" class="btn-success">
-                                <i class="fas fa-check"></i> Approve Post
-                            </a>
-                        <?php endif; ?>
-                        
-                        <a href="delete-post.php?id=<?php echo $post['id']; ?>" class="btn-danger" onclick="return confirm('Are you sure you want to permanently delete this post?');">
-                            <i class="fas fa-trash"></i> Delete Post
-                        </a>
-                    </div>
-                <?php endif; ?>
+            <!-- Comments -->
+            <section class="comments-container" id="comments">
+                <h2 class="sidebar-title">Conversation (<?php echo count($comments); ?>)</h2>
                 
-                <?php if (isLoggedIn() && $_SESSION['user_id'] == $post['author_id']): ?>
-                    <a href="edit-post.php?id=<?php echo $post['id']; ?>" class="btn-outline">
-                        <i class="fas fa-edit"></i> Edit Post
-                    </a>
-                <?php endif; ?>
-            </div>
-        </article>
-
-        <!-- Comments Section -->
-        <section class="comments-section">
-            <div class="comments-header">
-                <h3>
-                    <i class="far fa-comments"></i> 
-                    Comments 
-                    <span class="comments-count">(<?php echo count($comments); ?>)</span>
-                </h3>
-            </div>
-
-            <!-- Add Comment Form -->
-            <?php if (isLoggedIn()): ?>
-                <div class="add-comment-form">
-                    <form method="POST" action="">
-                        <div class="form-group">
-                            <textarea name="comment" id="comment" 
-                                      placeholder="Add your comment..." 
-                                      rows="4" maxlength="1000" required></textarea>
-                        </div>
-                        <button type="submit" name="add_comment" class="btn-primary">
-                            <i class="fas fa-paper-plane"></i> Post Comment
-                        </button>
-                    </form>
-                </div>
-            <?php else: ?>
-                <div class="login-prompt">
-                    <p>
-                        <a href="login.php">Login</a> to join the discussion and leave a comment.
-                    </p>
-                </div>
-            <?php endif; ?>
-
-            <!-- Comments List -->
-            <div class="comments-list">
-                <?php if (empty($comments)): ?>
-                    <div class="empty-comments">
-                        <i class="far fa-comment-dots"></i>
-                        <h4>No comments yet</h4>
-                        <p>Be the first to comment on this post!</p>
+                <?php if (isLoggedIn()): ?>
+                    <div class="comment-box">
+                        <form method="POST">
+                            <textarea name="comment" class="comment-input" placeholder="What are your thoughts?" required></textarea>
+                            <button type="submit" name="add_comment" class="btn btn-primary">Post Comment</button>
+                        </form>
                     </div>
                 <?php else: ?>
-                    <?php foreach ($comments as $comment): ?>
-                        <div class="comment-item" id="comment-<?php echo $comment['id']; ?>">
-                            <div class="comment-header">
-                                <div class="comment-author">
-                                    <strong><?php echo htmlspecialchars($comment['user_name']); ?></strong>
-                                    <span class="comment-role">(<?php echo ucfirst($comment['user_role']); ?>)</span>
-                                </div>
-                                <div class="comment-meta">
-                                    <span class="comment-date">
-                                        <?php echo formatDate($comment['created_at']); ?>
-                                    </span>
-                                    <?php if (isAdmin()): ?>
-                                        <a href="?id=<?php echo $postId; ?>&delete_comment=<?php echo $comment['id']; ?>" 
-                                           class="delete-comment" 
-                                           onclick="return confirm('Are you sure you want to delete this comment?')">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            <div class="comment-content">
-                                <?php echo nl2br(htmlspecialchars($comment['content'])); ?>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
+                    <div class="comment-box" style="text-align: center;">
+                        <p><a href="login.php" style="color: var(--brand-red); font-weight: 700;">Sign In</a> to join the conversation.</p>
+                    </div>
                 <?php endif; ?>
-            </div>
-        </section>
 
-        <!-- Related Posts -->
-        <?php if (!empty($relatedPosts)): ?>
-            <section class="related-posts">
-                <h3>
-                    <i class="fas fa-link"></i> 
-                    Related Posts
-                </h3>
-                <div class="related-grid">
-                    <?php foreach ($relatedPosts as $related): ?>
-                        <div class="related-card">
-                            <div class="related-content">
-                                <div class="related-meta">
-                                    <span class="category-tag small"><?php echo htmlspecialchars($related['category']); ?></span>
-                                    <span class="date"><?php echo formatDate($related['created_at']); ?></span>
+                <div class="comments-list">
+                    <?php if (empty($comments)): ?>
+                        <p style="color: #888; text-align: center;">No comments yet. Start the conversation!</p>
+                    <?php else: ?>
+                        <?php foreach ($comments as $comment): ?>
+                            <div class="comment-card">
+                                <div>
+                                    <span class="comment-user"><?php echo htmlspecialchars($comment['user_name']); ?></span>
+                                    <span class="comment-date"><?php echo formatDate($comment['created_at']); ?></span>
                                 </div>
-                                <h4>
-                                    <a href="post-detail.php?id=<?php echo $related['id']; ?>">
-                                        <?php echo htmlspecialchars($related['title']); ?>
-                                    </a>
-                                </h4>
-                                <p><?php echo htmlspecialchars(substr($related['content'], 0, 100)) . '...'; ?></p>
-                                <div class="related-footer">
-                                    <span class="author">By <?php echo htmlspecialchars($related['author_name']); ?></span>
-                                    <span class="views"><i class="far fa-eye"></i> <?php echo $related['views']; ?></span>
+                                <div class="comment-text">
+                                    <?php echo nl2br(htmlspecialchars($comment['content'])); ?>
                                 </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </section>
-        <?php endif; ?>
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="article-sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Trending Now</h3>
+                <?php foreach ($trendingPosts as $tPost): ?>
+                    <a href="post-detail.php?id=<?php echo $tPost['id']; ?>" class="sidebar-item">
+                        <img src="<?php echo $tPost['image_url'] ?: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200'; ?>" class="sidebar-img">
+                        <div class="sidebar-content">
+                            <span style="color: var(--brand-red); font-size: 0.7rem; font-weight: 800; text-transform: uppercase;"><?php echo htmlspecialchars($tPost['category']); ?></span>
+                            <h4><?php echo htmlspecialchars($tPost['title']); ?></h4>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Higher Education</h3>
+                <?php foreach ($academicsPosts as $aPost): ?>
+                    <a href="post-detail.php?id=<?php echo $aPost['id']; ?>" class="sidebar-item">
+                        <div class="sidebar-content">
+                            <h4 style="margin-bottom: 5px;"><?php echo htmlspecialchars($aPost['title']); ?></h4>
+                            <span class="comment-date"><?php echo formatDate($aPost['created_at']); ?></span>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+            
+            <div style="background: var(--brand-gray); padding: 2rem; text-align: center; border-radius: 4px;">
+                <h4 style="font-family: 'Oswald'; margin-bottom: 1rem;">GET THE NEWSLETTER</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 1rem;">The latest IUB stories delivered to your inbox.</p>
+                <a href="register.php" class="btn btn-primary" style="width: 100%;">Sign Up</a>
+            </div>
+        </aside>
     </div>
 </main>
 

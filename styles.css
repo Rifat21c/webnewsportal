@@ -454,6 +454,195 @@ Let's stick to the Overlay for the MAIN hero to save space, but make it legible 
     letter-spacing: 0.5px;
 }
 
+/* ============ ARTICLE PAGE (CNN/BBC STYLE) ============ */
+.article-container {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 3rem;
+    margin: 3rem auto;
+}
+
+.article-main {
+    max-width: 800px;
+}
+
+.article-header {
+    margin-bottom: 2rem;
+}
+
+.article-category {
+    color: var(--brand-red);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.article-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--brand-dark);
+}
+
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.author-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.author-name-text {
+    font-weight: 700;
+    color: var(--brand-dark);
+}
+
+.article-media {
+    margin-bottom: 2.5rem;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.article-media img,
+.article-media video {
+    width: 100%;
+    display: block;
+}
+
+.article-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+.article-body p {
+    margin-bottom: 1.5rem;
+}
+
+/* Sidebar */
+.article-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+.sidebar-section {
+    margin-bottom: 3rem;
+}
+
+.sidebar-title {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    border-bottom: 2px solid var(--brand-dark);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.sidebar-item:last-child {
+    border-bottom: none;
+}
+
+.sidebar-img {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.sidebar-content h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.4;
+    margin-bottom: 0.25rem;
+}
+
+/* Comments */
+.comments-container {
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 4px solid var(--brand-dark);
+}
+
+.comment-box {
+    background: var(--brand-gray);
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+}
+
+.comment-input {
+    width: 100%;
+    border: 1px solid var(--border-strong);
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    min-height: 120px;
+    margin-bottom: 1rem;
+}
+
+.comment-card {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.comment-card:last-child {
+    border-bottom: none;
+}
+
+.comment-user {
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+.comment-date {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.comment-text {
+    margin-top: 0.75rem;
+    font-size: 1.05rem;
+}
+
+@media (max-width: 1100px) {
+    .article-container {
+        grid-template-columns: 1fr;
+    }
+
+    .article-sidebar {
+        display: none;
+    }
+
+    .article-title {
+        font-size: 2.5rem;
+    }
+}
+
 /* ============ MOBILE & RESPONSIVENESS ============ */
 .mobile-menu-toggle {
     display: none;
