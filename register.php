@@ -34,8 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 $error = $result['message'];
             }
+        } else {
+            $error = "System error: Registration function not found. Please contact admin.";
         }
     }
+    // Final fallback
+    if (empty($error)) $error = "Registration failed. Please try again.";
 }
 ?>
 <!DOCTYPE html>
