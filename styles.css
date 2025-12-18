@@ -406,6 +406,8 @@ Let's stick to the Overlay for the MAIN hero to save space, but make it legible 
     color: var(--text-secondary);
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
+    /* Standard property for compatibility */
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -452,24 +454,87 @@ Let's stick to the Overlay for the MAIN hero to save space, but make it legible 
     letter-spacing: 0.5px;
 }
 
-/* ============ MOBILE ============ */
+/* ============ MOBILE & RESPONSIVENESS ============ */
 .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--brand-red);
+    cursor: pointer;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    align-items: center;
+    gap: 8px;
+}
+
+.mobile-only {
     display: none;
 }
 
 @media (max-width: 900px) {
+    .desktop-only {
+        display: none !important;
+    }
 
-    .nav-links,
-    .nav-search,
-    .header-actions {
-        display: none;
+    .mobile-only {
+        display: block;
+    }
+
+    .header-main {
+        padding: 15px 0;
+    }
+
+    .brand-text h1 {
+        font-size: 1.5rem;
     }
 
     .mobile-menu-toggle {
-        display: block;
-        background: none;
-        border: none;
-        font-size: 1.5rem;
+        display: flex;
+    }
+
+    /* Mobile Drawer Setup */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        /* Hidden by default */
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 80px 30px;
+        gap: 1.5rem;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+        transition: left 0.3s ease;
+        z-index: 3000;
+        overflow-y: auto;
+    }
+
+    .nav-links.active {
+        left: 0;
+    }
+
+    .nav-item {
+        font-size: 1.2rem;
+        width: 100%;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .nav-item::after {
+        display: none;
+        /* Disable desktop hover effect */
+    }
+
+    .nav-separator.mobile-only {
+        width: 100%;
+        height: 1px;
+        background: var(--border-strong);
+        margin: 10px 0;
     }
 
     .news-hero-section {
@@ -485,4 +550,38 @@ Let's stick to the Overlay for the MAIN hero to save space, but make it legible 
     .news-list-view {
         grid-template-columns: 1fr;
     }
+}
+
+/* Overlay for mobile menu */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2500;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.nav-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Close button in drawer */
+.menu-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--brand-red);
+    cursor: pointer;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
 }
