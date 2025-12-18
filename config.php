@@ -45,6 +45,10 @@ date_default_timezone_set('Asia/Dhaka');
 
 // Authentication Functions
 function isLoggedIn() {
+    // Ensure session is started
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
 }
 
@@ -57,7 +61,7 @@ function getUser() {
     
     return [
         'id' => $_SESSION['user_id'] ?? null,
-        'name' => $_SESSION['user_name'] ?? '',
+        'name' => $_SESSION['user_member_name'] ?? $_SESSION['user_name'] ?? '',
         'email' => $_SESSION['user_email'] ?? '',
         'role' => $_SESSION['user_role'] ?? 'student'
     ];

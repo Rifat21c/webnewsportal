@@ -2,34 +2,6 @@
 // database.php - Database Functions (Complete Version)
 require_once 'config.php';
 
-// ========== AUTH HELPER FUNCTIONS ==========
-
-// Check if user is logged in
-function isLoggedIn() {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-    return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
-}
-
-// Check if user is admin
-function isAdmin() {
-    return isLoggedIn() && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
-}
-
-// Get current user info from session
-function getUser() {
-    if (isLoggedIn()) {
-        return [
-            'id' => $_SESSION['user_id'],
-            'name' => $_SESSION['user_member_name'] ?? $_SESSION['user_name'] ?? '',
-            'email' => $_SESSION['user_email'] ?? '',
-            'role' => $_SESSION['user_role'] ?? 'student'
-        ];
-    }
-    return null;
-}
-
 // ========== POST FUNCTIONS ==========
 
 // Get all posts (admin function)
