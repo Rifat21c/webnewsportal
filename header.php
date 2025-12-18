@@ -3,7 +3,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-$isLoggedIn = isset($_SESSION['logged_in']) && $_SESSION['logged_in'];
+$isLoggedIn = isLoggedIn();
 $userName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : '';
 ?>
 <!-- Styles are assumed to be loaded by the parent page or we can include them here if strict -->
@@ -41,9 +41,10 @@ $userName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : '';
             <div class="nav-links">
                 <a href="index.php" class="nav-item">Home</a>
                 <a href="index.php#trending" class="nav-item">Trending</a>
-                <a href="index.php#recent" class="nav-item">Latest News</a>
-                <a href="#" class="nav-item">Academics</a>
-                <a href="#" class="nav-item">Student Life</a>
+                <a href="search.php?cat=Academics" class="nav-item">Academics</a>
+                <a href="search.php?cat=Student Life" class="nav-item">Student Life</a>
+                <a href="search.php?cat=Events" class="nav-item">Events</a>
+                <a href="search.php?cat=Sports" class="nav-item">Sports</a>
                 
                 <?php if ($isLoggedIn): ?>
                     <div class="nav-separator"></div>

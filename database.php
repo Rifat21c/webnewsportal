@@ -2,6 +2,34 @@
 // database.php - Database Functions (Complete Version)
 require_once 'config.php';
 
+// ========== AUTH HELPER FUNCTIONS ==========
+
+// Check if user is logged in
+function isLoggedIn() {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+}
+
+// Check if user is admin
+function isAdmin() {
+    return isLoggedIn() && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+}
+
+// Get current user info from session
+function getUser() {
+    if (isLoggedIn()) {
+        return [
+            'id' => $_SESSION['user_id'],
+            'name' => $_SESSION['user_member_name'] ?? $_SESSION['user_name'] ?? '',
+            'email' => $_SESSION['user_email'] ?? '',
+            'role' => $_SESSION['user_role'] ?? 'student'
+        ];
+    }
+    return null;
+}
+
 // ========== POST FUNCTIONS ==========
 
 // Get all posts (admin function)
@@ -147,6 +175,29 @@ function getPosts($limit = 10, $status = 'approved') {
     
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "si", $status, $limit);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    
+    $posts = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $posts[] = $row;
+    }
+    return $posts;
+}
+
+// Get posts by category
+function getPostsByCategory($category, $limit = 10) {
+    global $conn;
+    $status = 'approved';
+    $sql = "SELECT p.*, u.name as author_name 
+            FROM posts p 
+            LEFT JOIN users u ON p.author_id = u.id 
+            WHERE p.status = ? AND p.category = ?
+            ORDER BY p.created_at DESC 
+            LIMIT ?";
+    
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ssi", $status, $category, $limit);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     

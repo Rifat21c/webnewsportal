@@ -6,19 +6,26 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once 'database.php';
 
 $query = isset($_GET['q']) ? trim($_GET['q']) : '';
+$category = isset($_GET['cat']) ? trim($_GET['cat']) : '';
 $searchResults = [];
 
 if (!empty($query)) {
     $searchResults = searchPosts($query);
+    $pageTitle = "Search: " . htmlspecialchars($query);
+} elseif (!empty($category)) {
+    $searchResults = getPostsByCategory($category, 20);
+    $pageTitle = "Category: " . htmlspecialchars($category);
+} else {
+    $pageTitle = "Search - IUB News Portal";
 }
-
-$pageTitle = "Search: " . htmlspecialchars($query);
 getHeader($pageTitle);
 ?>
 
 <main class="container main-content-area">
     <div class="search-header-block" style="margin-bottom: 3rem; border-bottom: 1px solid var(--border-light); padding-bottom: 2rem;">
-        <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Search Results</h1>
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">
+            <?php echo !empty($category) ? htmlspecialchars($category) : "Search Results"; ?>
+        </h1>
         <form action="search.php" method="GET" class="search-page-form" style="display: flex; gap: 10px; max-width: 600px;">
             <input type="text" name="q" value="<?php echo htmlspecialchars($query); ?>" 
                    placeholder="Search news, topics, and more..." 
