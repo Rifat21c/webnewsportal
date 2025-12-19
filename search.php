@@ -34,7 +34,7 @@ getHeader($pageTitle);
         </form>
     </div>
 
-    <?php if (empty($query)): ?>
+    <?php if (empty($query) && empty($category)): ?>
         <div class="empty-state">
             <i class="fas fa-search" style="font-size: 3rem; color: var(--border-strong); margin-bottom: 1rem;"></i>
             <h3>Enter a keyword to search</h3>
